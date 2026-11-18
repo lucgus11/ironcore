@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0a10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>IRONCORE : Deep Forge</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="game" aria-label="Carte de la forteresse"></canvas>
+
+  <!-- Barre de ressources / vague -->
+  <header id="hud">
+    <div class="res" title="Fer"><b class="c-iron">▣</b><span id="r-iron">0</span></div>
+    <div class="res" title="Charbon"><b class="c-coal">●</b><span id="r-coal">0</span></div>
+    <div class="res" title="Lingots"><b class="c-ingot">▬</b><span id="r-ingot">0</span></div>
+    <div class="res" title="Cristaux runiques"><b class="c-crystal">◆</b><span id="r-crystal">0</span></div>
+    <div class="res" title="Nains"><b class="c-dwarf">@</b><span id="r-dwarf">0</span></div>
+    <div class="spacer"></div>
+    <div class="res wave" id="wave-box" title="Prochaine vague">☠ <span id="r-wave">V0</span> <span id="r-timer">--</span></div>
+    <div class="res core" title="Points de vie du coeur"><b class="c-core">♜</b>
+      <div class="bar"><i id="core-bar"></i></div></div>
+    <button id="btn-speed" class="mini" title="Vitesse (Espace = pause)">▶ x1</button>
+    <button id="btn-menu" class="mini" title="Menu">☰</button>
+  </header>
+
+  <div id="toast" role="status"></div>
+
+  <!-- Barre d'outils (bas) -->
+  <nav id="toolbar"></nav>
+  <div id="hint"></div>
+
+  <!-- Bouton de rotation du tapis (tactile) -->
+  <button id="btn-rot" class="mini" hidden>↻ Sens: →</button>
+
+  <!-- Menu -->
+  <div id="menu" hidden>
+    <div class="card">
+      <h1>IRONCORE</h1><h2>Deep Forge</h2>
+      <button id="m-resume">Reprendre</button>
+      <button id="m-new">Nouvelle partie</button>
+      <button id="m-install" hidden>Installer l'application</button>
+      <details>
+        <summary>Aide &amp; contrôles</summary>
+        <p><b>Objectif :</b> creusez la montagne, automatisez la forge, défendez le cœur ♜ contre les vagues de monstres.</p>
+        <p><b>PC :</b> clic = outil · clic droit/milieu + glisser = caméra · molette = zoom · 1-9 = outils · R = tourner · Espace = pause · Échap = annuler.</p>
+        <p><b>Mobile :</b> 1 doigt = outil (glisser = tracer) · 2 doigts = caméra + pinch-zoom · bouton « ✋ Caméra » = déplacer à 1 doigt.</p>
+        <p><b>Chaîne :</b> foreuse sur un filon creusé → tapis → fonderie (fer + charbon) → tapis → cœur. Les lingots servent de munitions aux tourelles.</p>
+      </details>
+      <p class="small" id="m-status"></p>
+    </div>
+  </div>
+
+  <div id="gameover" hidden>
+    <div class="card">
+      <h1>Le cœur est tombé</h1>
+      <p id="go-stats"></p>
+      <button id="go-new">Nouvelle partie</button>
+    </div>
+  </div>
+
+  <noscript>Ce jeu nécessite JavaScript et WebAssembly.</noscript>
+  <script src="game.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
