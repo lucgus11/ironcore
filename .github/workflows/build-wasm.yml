@@ -1,0 +1,26 @@
+# Compile le moteur C en WebAssembly a chaque push sur main, puis commit web/game.js + web/game.wasm.
+# Vercel redeploie automatiquement a chaque commit : rien d'autre a faire.
+name: build-wasm
+on:
+  push:
+    branches: [main]
+    paths: ['src/**', 'build.sh', 'tests/**', '.github/workflows/build-wasm.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tests natifs C (ASAN/UBSAN)
+        run: ./build.sh test
+      - uses: mymindstorm/setup-emsdk@v14
+      - name: Compilation WebAssembly
+        run: ./build.sh wasm
+      - name: Commit des artefacts
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f web/game.js web/game.wasm
+          git diff --cached --quiet || (git commit -m "build: wasm [skip ci]" && git push)
