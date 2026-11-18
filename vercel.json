@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": null,
+  "installCommand": null,
+  "outputDirectory": "web",
+  "cleanUrls": true,
+  "headers": [
+    { "source": "/service-worker.js", "headers": [
+      { "key": "Cache-Control", "value": "no-cache, max-age=0, must-revalidate" },
+      { "key": "Service-Worker-Allowed", "value": "/" } ] },
+    { "source": "/(game\\.js|game\\.wasm|app\\.js|style\\.css|index\\.html)", "headers": [
+      { "key": "Cache-Control", "value": "no-cache" } ] },
+    { "source": "/game.wasm", "headers": [ { "key": "Content-Type", "value": "application/wasm" } ] },
+    { "source": "/manifest.json", "headers": [ { "key": "Content-Type", "value": "application/manifest+json" } ] }
+  ]
+}
